@@ -1,0 +1,181 @@
+Greater Potion of Wisdom
+Greater Potion of Defense
+Greater Potion of Speed
+Greater Potion of Dexterity
+Greater Potion of Mana
+Greater Potion of Vitality
+Greater Potion of Life
+Greater Potion of Attack
+Tomb of the Ancients Key
+Ocean Trench Key
+Snake Pit Key
+Undead Lair Key
+Manor Key
+Abyss of Demons Key
+Davy's Key
+Beachzone Key
+Lab Key
+Candy Key
+Deadwater Docks Key
+Woodland Labyrinth Key
+The Crawling Depths Key
+Battle Nexus Key
+Cemetery Key
+Shatters Key
+Bella's Key
+Shaitan's Key
+Draconis Key
+Emerald Mystery Key
+Theatre Key
+Ice Cave Key
+Speed Sprout
+White Drake Egg
+Blue Drake Egg
+Orange Drake Egg
+Green Drake Egg
+Pollen Powder
+Holy Water
+Fire Water
+Coral Juice
+Minor Health Potion
+Minor Magic Potion
+Pirate Rum
+Ghost Pirate Rum
+Magic Mushroom
+Transformation Potion
+Valentine
+Mad God Ale
+Oryx Stout
+Realm-wheat Hefeweizen
+Saint Patty's Brew
+Rock Candy
+Green Gumball
+Candy Corn
+Slime Archer Skin
+Slime Knight Skin
+Slime Priest Skin
+Slime Ninja Skin
+Slime Wizard Skin
+Slime Sorcerer Skin
+Slime Trickster Skin
+Slime Mystic Skin
+Slime Huntress Skin
+Slime Necromancer Skin
+Slime Assassin Skin
+Slime Paladin Skin
+Slime Rogue Skin
+Slime Warrior Skin
+Puppet Master Skin
+Infected Skin
+Iceman Skin
+Staff of Destruction T7
+Staff of Horror T8
+Staff of Necrotic Arcana T9
+Staff of Diabolic Secrets T10
+Wand of Arcane Flame T7
+Wand of Death T8
+Wand of Deep Sorcery T9
+Wand of Shadow T10
+Heavy Crossbow T7
+Golden Bow T8
+Verdant Bow T9
+Bow of Fey Magic T10
+Mithril Dagger T7
+Fire Dagger T8
+Ragetalon Dagger T9
+Emeraldshard Dagger T10
+Golden Sword T7
+Ravenheart Sword T8
+Dragonsoul Sword T9
+Archon Sword T10
+Buster Katana T7
+Demon Edge T8
+Jewel Eye Katana T9
+Ichimonji T10
+Robe of the Invoker T7
+Robe of the Illusionist T8
+Robe of the Master T9
+Robe of the Shadow Magus T10
+Mithril Chainmail T7
+Mithril Armor T8
+Dragonscale Armor T9
+Desolation Armor T10
+Wyvern Skin Armor T7
+Studded Leather Armor T8
+Drake Hide Armor T9
+Roc Leather Armor T10
+Cloak of the Red Agent T4
+Elvencraft Quiver T3
+Magesteel Quiver T4
+Destruction Sphere Spell T4
+Tome of Renewing T4
+Steel Helm T4
+Golden Shield T4
+Seal of the Divine T4
+Felwasp Toxin T4
+Soul Siphon Skull T3
+Essence Tap Skull T4
+Stasis Orb T0
+Timelock Orb T4
+Decoy Prism T0
+Prism of Figments T4
+Cloudflash Scepter T4
+Wind Circle T4
+Ring of Superior Defense T3
+Ring of Superior Health T3
+Ring of Paramount Attack T4
+Ring of Paramount Defense T4
+Ring of Paramount Speed T4
+Ring of Paramount Vitality T4
+Ring of Paramount Wisdom T4
+Ring of Paramount Dexterity T4
+Ring of Paramount Health T4
+Ring of Paramount Magic T4
+Golden Ankh
+Eye of Osiris
+Pharaoh's Mask
+Golden Cockle
+Golden Conch
+Golden Horn Conch
+Golden Nut
+Golden Bolt
+Golden Femur
+Golden Ribcage
+Golden Skull
+Golden Candelabra
+Holy Cross
+Pearl Necklace
+Golden Chalice
+Ruby Gemstone
+The Devil Tarot Card
+The Sun Tarot Card
+Death Tarot Card
+The Tower Tarot Card
+The Magician Tarot Card
+The World Tarot Card
+The Chariot Tarot Card
+The Moon Tarot Card
+The Fool Tarot Card
+Common Feline Egg
+Common Canine Egg
+Common Avian Egg
+Common Exotic Egg
+Common Farm Egg
+Common Woodland Egg
+Common Reptile Egg
+Common Insect Egg
+Common Penguin Egg
+Common Aquatic Egg
+Common Spooky Egg
+Common Humanoid Egg
+Common ???? Egg
+Common Automaton Egg
+Common Mystery Egg
+Any item with 200 or more feed power
+Any item with 300 or more feed power
+Any item with 400 or more feed power
+Any item with 450 or more feed power
+Any item with 500 or more feed power
+Any item with 550 or more feed power
+Any item with 600 or more feed power
+Any item with 650 or more feed power
