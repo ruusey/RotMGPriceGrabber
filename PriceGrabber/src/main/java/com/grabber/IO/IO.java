@@ -14,6 +14,7 @@ import com.grabber.models.TimeOffer;
 
 public class IO {
 	static HashMap<String, Integer> nameToId = new HashMap<String, Integer>();
+	static HashMap<Integer, String> idToName = new HashMap<Integer, String>();
 
 	public boolean updatePrices(ArrayList<Item> items) throws Exception {
 
@@ -24,22 +25,20 @@ public class IO {
 		}
 		String url = "jdbc:mysql://localhost:3306/item_prices";
 		String USER = "root";
-		String PASS = "";
+		String PASS = "admin";
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			conn = DriverManager.getConnection(url, USER, PASS);
 			for (Item i : items) {
 				if (!Double.isNaN(i.valueDef)) {
-					String sql = "INSERT INTO `" + i.name.toLowerCase()
-							+ "` (item_name, item_value)" + " values (?, ?)";
+					String sql = "INSERT INTO `item_prices` (item_id, item_value)" + " values (?, ?)";
 					PreparedStatement preparedStmt = conn.prepareStatement(sql);
-					preparedStmt.setString(1, i.name);
+					preparedStmt.setInt(1, i.id);
 					preparedStmt.setDouble(2, i.valueDef);
 					preparedStmt.execute();
 				} else {
-					System.out
-							.println("could not update price because the value was NaN");
+					System.out.println("could not update price because the value was NaN");
 				}
 
 			}
@@ -63,20 +62,19 @@ public class IO {
 		ArrayList<TimeOffer> res = new ArrayList<TimeOffer>();
 		String url = "jdbc:mysql://localhost:3306/item_prices";
 		String USER = "root";
-		String PASS = "";
+		String PASS = "admin";
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			conn = DriverManager.getConnection(url, USER, PASS);
 			Statement st = conn.createStatement();
-			String SQL = "SELECT item_name,item_value,date FROM `"
-					+ i.name.toLowerCase() + "` ORDER BY id ASC";
+			String SQL = "SELECT item_id,item_value,timestamp FROM `" + i.name.toLowerCase() + "` ORDER BY id ASC";
 			ResultSet rs = st.executeQuery(SQL);
 			while (rs.next()) {
 				int columnId = 1;
 
 				TimeOffer t = new TimeOffer();
-				t.setName(rs.getString(columnId++));
+				t.setName(idToName.get(rs.getInt(columnId++)));
 				t.setValueDef(rs.getDouble(columnId++));
 				t.setTimestamp(rs.getTimestamp(columnId++));
 
@@ -97,26 +95,26 @@ public class IO {
 		return res;
 	}
 
-	public ArrayList<TimeOffer> getItemPriceHistory(String itemName)
-			throws Exception {
+	public ArrayList<TimeOffer> getItemPriceHistory(String itemName) throws Exception {
 		ArrayList<TimeOffer> res = new ArrayList<TimeOffer>();
 		String url = "jdbc:mysql://localhost:3306/item_prices";
 		String USER = "root";
-		String PASS = "";
+		String PASS = "admin";
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			conn = DriverManager.getConnection(url, USER, PASS);
 			Statement st = conn.createStatement();
-			String SQL = "SELECT inames.item_name,iprices.item_value,iprices.date FROM item_names as inames "+ 
-						 "INNER JOIN item_prices iprices WHERE inames.id=iprices.item_id AND inames.item_name='"+itemName+"' "+
-						 "ORDER BY inames.item_name ASC";
+			String SQL = "SELECT inames.item_id,iprices.item_value,iprices.timestamp FROM item_prices.item_names as inames INNER JOIN item_prices as iprices WHERE inames.item_id=iprices.item_id AND inames.item_name="
+					+ itemName + " ORDER BY iprices.timestamp ASC LIMIT 200";
+
+			System.out.println(SQL);
 			ResultSet rs = st.executeQuery(SQL);
 			while (rs.next()) {
 				int columnId = 1;
 
 				TimeOffer t = new TimeOffer();
-				t.setName(rs.getString(columnId++));
+				t.setName(idToName.get(rs.getInt(columnId++)));
 				t.setValueDef(rs.getDouble(columnId++));
 				t.setTimestamp(rs.getTimestamp(columnId++));
 
@@ -137,7 +135,7 @@ public class IO {
 		return res;
 	}
 
-	public boolean updatePricesNew(ArrayList<Item> items) throws Exception {
+	public static boolean updatePricesNew(ArrayList<Item> items) throws Exception {
 		loadHash();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -146,24 +144,22 @@ public class IO {
 		}
 		String url = "jdbc:mysql://localhost:3306/item_prices";
 		String USER = "root";
-		String PASS = "";
+		String PASS = "admin";
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			conn = DriverManager.getConnection(url, USER, PASS);
 			for (Item i : items) {
+
 				if (!Double.isNaN(i.valueDef)) {
-					String sql = "INSERT INTO `item_prices` (item_id, item_value)"
-							+ " values (?, ?)";
+					String sql = "INSERT INTO `item_prices` (item_id, item_value)" + " values (?, ?)";
 					PreparedStatement preparedStmt = conn.prepareStatement(sql);
 					preparedStmt.setInt(1, nameToId.get(i.name));
 					preparedStmt.setDouble(2, i.valueDef);
 					preparedStmt.execute();
 				} else {
-					System.out
-							.println("could not update price because the value was NaN");
+					System.out.println("could not update price because the value was NaN");
 				}
-
 			}
 
 		} catch (Exception e) {
@@ -185,18 +181,19 @@ public class IO {
 		nameToId.clear();
 		String url = "jdbc:mysql://localhost:3306/item_prices";
 		String USER = "root";
-		String PASS = "";
+		String PASS = "admin";
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			conn = DriverManager.getConnection(url, USER, PASS);
 			Statement st = conn.createStatement();
-			String SQL = "SELECT item_name, id FROM `item_names` ORDER BY id ASC";
+			String SQL = "SELECT item_id, item_name FROM `item_names` ORDER BY id ASC";
 			ResultSet rs = st.executeQuery(SQL);
 			while (rs.next()) {
 				int columnId = 1;
 
-				nameToId.put(rs.getString(columnId++), rs.getInt(columnId++));
+				nameToId.put(rs.getString(2), rs.getInt(1));
+				idToName.put(rs.getInt(1), rs.getString(2));
 			}
 
 		} catch (Exception e) {

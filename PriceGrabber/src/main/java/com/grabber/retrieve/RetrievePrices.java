@@ -10,10 +10,10 @@ public class RetrievePrices extends Thread{
 	
 	public void run(){
 		
-		IO io = new IO();
+		
 		while(true){
 			
-			try {BuildPrices.loadBlacklist("C:\\deploys\\RotMGPriceGrabber\\blacklist.txt");}catch (Exception e){e.printStackTrace();} 
+			try {BuildPrices.loadBlacklist("C:\\tmp\\blacklist.txt");}catch (Exception e){e.printStackTrace();} 
 			System.out.println("[INFO] Loaded Item Blacklist");
 			ArrayList<Item> items = BuildPrices.getPrices();
 			if(items==null){
@@ -22,13 +22,13 @@ public class RetrievePrices extends Thread{
 			
 			try {
 				//CreateTables.Create(items);
-				io.updatePricesNew(items);
+				IO.updatePricesNew(items);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			try{
 				Random r = new Random();
-				int wait = r.nextInt(10000 - 1000) + 1000;
+				int wait = r.nextInt(100000 - 10000) + 300000;
 				System.out.println("[INFO] Sleeping For "+wait+" millis (random)");
 				Thread.sleep(wait);
 			}catch(Exception e){

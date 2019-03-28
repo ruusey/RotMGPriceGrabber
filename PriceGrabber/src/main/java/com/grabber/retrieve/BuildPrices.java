@@ -24,6 +24,7 @@ import org.jsoup.select.Elements;
 
 import com.grabber.models.Item;
 import com.grabber.models.Offer;
+import com.owlike.genson.Genson;
 
 public class BuildPrices {
 	
@@ -38,6 +39,7 @@ public class BuildPrices {
 	//Url for buying offers
 	public static String buyURL = "https://www.realmeye.com/offers-to/buy/" ;
 	//necessary array lists
+	public static ArrayList<String> log = null;
 	public static ArrayList<String> blacklist = new ArrayList<String>();
 	public static ArrayList<Item> potions = new ArrayList<Item>();
 	public static ArrayList<Item> items = new ArrayList<Item>();
@@ -66,6 +68,8 @@ public class BuildPrices {
 		    	System.out.println("[INFO] Loaded Blacklisted Item: "+line);
 		       blacklist.add(line);
 		    }
+		    System.out.println("Done");
+		    br.close();
 		}
 	}
 	public static ArrayList<Item> buildItems(){
@@ -77,46 +81,48 @@ public class BuildPrices {
 		ArrayList<Item> res = new ArrayList<Item>();
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(offerURL).userAgent("Mozilla").get();
+			doc = Jsoup.connect(offerURL).userAgent("Mozilla/5.0").header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8").header("upgrade-insecure-requests", "1").get();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			return res;
 		}
 		
-		Elements items = doc.getElementsByClass("item");
-		String name = null;
-		int id = 0;
-		
+		Elements items = doc.getElementsByClass("item-wrapper");
+		System.out.println("got: "+items.size());
 		for(Element e:items){
-			name=e.attr("title");
-			String hrefId = e.parent().lastElementSibling().attr("href");
-			int lastIndex=0;
-			while(true){
-				int i = hrefId.indexOf('/',lastIndex);
-				if(i==-1){
-					try{
-						String s = new String(hrefId.substring(lastIndex).toString());
-						id=Integer.parseInt(s);
-					}catch(Exception e1){
-						
-					}
-					break;
-				}else{
-					lastIndex=i+1;
+			if(e.hasClass("disabled")) continue;
+			Elements children = e.children();
+			
+			Element spanTitle = null;
+			try {
+				spanTitle = children.get(0).firstElementSibling().child(0);
+			} catch (Exception e2) {
+				break;
+			}
+			String itemName = spanTitle.attr("title");
+			System.out.println(itemName);
+			String hrefId = children.get(1).attr("href");
+			
+			int itemIdInt = -1;
+			try {
+				String itemId = hrefId.split("/")[3];
+				itemIdInt = Integer.parseInt(itemId);
+			}catch(Exception e1) {
+				System.out.println("Could not parse itemId for item: "+itemName);
+				continue;
+			}
+			if(itemIdInt!=-1) {
+				nameToId.put(itemName, itemIdInt);
+				idToName.put(itemIdInt, itemName);
+				if (potionIds.contains(itemIdInt) && !blacklist.contains(itemName)) {
+					Item i = new Item(itemIdInt, -1.0, itemName, true);
+					res.add(i);
+					potions.add(i);
+				} else if (!blacklist.contains(itemName)) {
+					Item i = new Item(itemIdInt, -1.0, itemName, false);
+					res.add(i);
 				}
-				
 			}
-			nameToId.put(name, id);
-			idToName.put(id, name);
-			if (potionIds.contains(id) && !blacklist.contains(name)) {
-				Item i = new Item(id, -1.0, name, true);
-				res.add(i);
-				potions.add(i);
-			} else if (!blacklist.contains(name)) {
-				Item i = new Item(id, -1.0, name, false);
-				res.add(i);
-			}
-
 		}
 		
 		return res;
@@ -324,9 +330,9 @@ public class BuildPrices {
 		StandardDeviation d = new StandardDeviation();
 		Mean m = new Mean();
 		ArrayList<Double> res = new ArrayList<Double>();
-		if(potions.get(0).id==defId){
-			potions.remove(0);
-		}
+//		if(potions.get(0).id==defId){
+//			potions.remove(0);
+//		}
 		
 		for(Item i:potions){
 			ArrayList<Offer> buy = buyPrice(i);
@@ -350,56 +356,58 @@ public class BuildPrices {
 	}
 	public static double complexPrice(Offer o){
 		
-		if(potionIds.contains(o.id)){
-			String pot = idToName.get(o.id);
-			if(pot.equals("Potion of Attack")){
-				return ((double)o.idQuantity*(double)potionPrices.get(0))/(double)o.otherIDQuantity;
+			if(potionIds.contains(o.id)){
+				String pot = idToName.get(o.id);
+				if(pot.equals("Potion of Attack")){
+					return ((double)o.idQuantity*(double)potionPrices.get(0))/(double)o.otherIDQuantity;
+				}
+				if(pot.equals("Potion of Speed")){
+					return ((double)o.idQuantity*(double)potionPrices.get(1))/(double)o.otherIDQuantity;
+				}
+				if(pot.equals("Potion of Dexterity")){
+					return ((double)o.idQuantity*(double)potionPrices.get(2))/(double)o.otherIDQuantity;
+				}
+				if(pot.equals("Potion of Wisdom")){
+					return ((double)o.idQuantity*(double)potionPrices.get(3))/(double)o.otherIDQuantity;
+				}
+				if(pot.equals("Potion of Vitality")){
+					return ((double)o.idQuantity*(double)potionPrices.get(4))/(double)o.otherIDQuantity;
+				}
+				if(pot.equals("Potion of Mana")){
+					return ((double)o.idQuantity*(double)potionPrices.get(5))/(double)o.otherIDQuantity;
+				}
+				if(pot.equals("Potion of Life")){
+					return ((double)o.idQuantity*(double)potionPrices.get(6))/(double)o.otherIDQuantity;
+				}
 			}
-			if(pot.equals("Potion of Speed")){
-				return ((double)o.idQuantity*(double)potionPrices.get(1))/(double)o.otherIDQuantity;
-			}
-			if(pot.equals("Potion of Dexterity")){
-				return ((double)o.idQuantity*(double)potionPrices.get(2))/(double)o.otherIDQuantity;
-			}
-			if(pot.equals("Potion of Wisdom")){
-				return ((double)o.idQuantity*(double)potionPrices.get(3))/(double)o.otherIDQuantity;
-			}
-			if(pot.equals("Potion of Vitality")){
-				return ((double)o.idQuantity*(double)potionPrices.get(4))/(double)o.otherIDQuantity;
-			}
-			if(pot.equals("Potion of Mana")){
-				return ((double)o.idQuantity*(double)potionPrices.get(5))/(double)o.otherIDQuantity;
-			}
-			if(pot.equals("Potion of Life")){
-				return ((double)o.idQuantity*(double)potionPrices.get(6))/(double)o.otherIDQuantity;
-			}
-		}
-		if(potionIds.contains(o.otherID)){
-			String pot = idToName.get(o.otherID);
-			if(pot.equals("Potion of Attack")){
-				return ((double)o.otherIDQuantity*(double)potionPrices.get(0))/(double)o.idQuantity;
-			}
-			if(pot.equals("Potion of Speed")){
-				return ((double)o.otherIDQuantity*(double)potionPrices.get(1))/(double)o.idQuantity;
-			}
-			if(pot.equals("Potion of Dexterity")){
-				return ((double)o.otherIDQuantity*(double)potionPrices.get(2))/(double)o.idQuantity;
-			}
-			if(pot.equals("Potion of Wisdom")){
-				return ((double)o.otherIDQuantity*(double)potionPrices.get(3))/(double)o.idQuantity;
-			}
-			if(pot.equals("Potion of Vitality")){
-				return ((double)o.otherIDQuantity*(double)potionPrices.get(4))/(double)o.idQuantity;
-			}
-			if(pot.equals("Potion of Mana")){
-				return ((double)o.otherIDQuantity*(double)potionPrices.get(5))/(double)o.idQuantity;
-			}
-			if(pot.equals("Potion of Life")){
-				return ((double)o.otherIDQuantity*(double)potionPrices.get(6))/(double)o.idQuantity;
+			if(potionIds.contains(o.otherID)){
+				String pot = idToName.get(o.otherID);
+				if(pot.equals("Potion of Attack")){
+					return ((double)o.otherIDQuantity*(double)potionPrices.get(0))/(double)o.idQuantity;
+				}
+				if(pot.equals("Potion of Speed")){
+					return ((double)o.otherIDQuantity*(double)potionPrices.get(1))/(double)o.idQuantity;
+				}
+				if(pot.equals("Potion of Dexterity")){
+					return ((double)o.otherIDQuantity*(double)potionPrices.get(2))/(double)o.idQuantity;
+				}
+				if(pot.equals("Potion of Wisdom")){
+					return ((double)o.otherIDQuantity*(double)potionPrices.get(3))/(double)o.idQuantity;
+				}
+				if(pot.equals("Potion of Vitality")){
+					return ((double)o.otherIDQuantity*(double)potionPrices.get(4))/(double)o.idQuantity;
+				}
+				if(pot.equals("Potion of Mana")){
+					return ((double)o.otherIDQuantity*(double)potionPrices.get(5))/(double)o.idQuantity;
+				}
+				if(pot.equals("Potion of Life")){
+					return ((double)o.otherIDQuantity*(double)potionPrices.get(6))/(double)o.idQuantity;
+				}
+				
+
 			}
 			
-
-		}
+		
 		return 0.0;
 	}
 	
@@ -446,22 +454,28 @@ public class BuildPrices {
 	    return ret;
 	}
 	public static void main(String[] args){
-		try {loadBlacklist("C:\\deploys\\RotMGPriceGrabber\\blacklist.txt");}catch (Exception e){e.printStackTrace();} 
+		try {loadBlacklist("C:\\tmp\\blacklist.txt");}catch (Exception e){e.printStackTrace();} 
 		try {
 			enableSSLSocket();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		items = buildItems();
 		//remove def;
 		items.remove(0);
-		try {
-			CreateTables.Create(items);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Genson gen = new Genson();
+		for(Item item : items) {
+			System.out.println(gen.serialize(item));
 		}
+//		try {
+//			//CreateTables.Create(items);
+//			getPrices();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 	}
 	public static void enableSSLSocket() throws KeyManagementException, NoSuchAlgorithmException {
@@ -501,13 +515,15 @@ public class BuildPrices {
 		if(items==null){
 			return null;
 		}
-		items.remove(0);
+		log = new ArrayList<String>();
+		//items.remove(0);
 		
 		StandardDeviation d = new StandardDeviation();
 		Mean m = new Mean();
 		ArrayList<Item> failed = new ArrayList<Item>();
 		for(Item i:items){
 			if(i.potion){
+				log.add("[INFO] Retrieving Offers For "+i.name);
 				System.out.println("[INFO] Retrieving Offers For "+i.name);
 				ArrayList<Offer> buy = buyPrice(i);
 				ArrayList<Offer> sell = sellPrice(i);
@@ -516,7 +532,7 @@ public class BuildPrices {
 					failed.add(i);
 					continue;
 				}
-				if(buy.size()<5 && sell.size()<5) {
+				if(buy.size()<2 && sell.size()<2) {
 					failed.add(i);
 					i.valueDef=-1;
 					continue;
@@ -538,9 +554,11 @@ public class BuildPrices {
 							double buySellAVG =(sellAVG+buyAVG)/2; 
 							i.valueDef=buySellAVG;
 							potionPrices.add(i.valueDef);
+							log.add("[INFO] "+i.name+ " B>: "+buyAVG+", S>: "+sellAVG+" B/S: "+buySellAVG);
 							System.out.println("[INFO] "+i.name+ " B>: "+buyAVG+", S>: "+sellAVG+" B/S: "+buySellAVG);
 
 			}else{
+				log.add("[INFO] Retrieving Offers For "+i.name);
 				System.out.println("[INFO] Retrieving Offers For "+i.name);
 				ArrayList<Offer> buy = buyPriceItem(i);
 				ArrayList<Offer> sell = sellPriceItem(i);
@@ -549,7 +567,7 @@ public class BuildPrices {
 					failed.add(i);
 					continue;
 				}
-				if(buy.size()<5 && sell.size()<5) {
+				if(buy.size()<2 && sell.size()<2) {
 					failed.add(i);
 					continue;
 				}
@@ -579,8 +597,8 @@ public class BuildPrices {
 							double buyAVG = average(buyClean);
 							double buySellAVG =(sellAVG+buyAVG)/2; 
 							i.valueDef=buySellAVG;
+							log.add("[INFO] "+i.name+ " B>: "+buyAVG+", S>: "+sellAVG+" B/S: "+buySellAVG);
 							System.out.println("[INFO] "+i.name+ " B>: "+buyAVG+", S>: "+sellAVG+" B/S: "+buySellAVG);
-							
 							
 							if(Double.isNaN(i.valueDef)){
 								failed.add(i);
@@ -590,9 +608,11 @@ public class BuildPrices {
 			
 		}
 		for(Item i: failed){
+			log.add("[ERROR] Failed To Retrieve An Accurate Price For "+i.name);
 			System.out.println("[ERROR] Failed To Retrieve An Accurate Price For "+i.name);
 			items.remove(i);
 		}
+		//writeReport(log);
 		return items;
 	}
 	

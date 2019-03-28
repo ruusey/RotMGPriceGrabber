@@ -6,6 +6,7 @@ Greater Potion of Mana
 Greater Potion of Vitality
 Greater Potion of Life
 Greater Potion of Attack
+Wine Cellar Incantation
 Tomb of the Ancients Key
 Ocean Trench Key
 Snake Pit Key
@@ -179,3 +180,129 @@ Any item with 500 or more feed power
 Any item with 550 or more feed power
 Any item with 600 or more feed power
 Any item with 650 or more feed power
+Magic Woods Key
+Puppet Master's Encore Key
+Toxic Sewers Key
+The Hive Key
+Halloween Cemetery Key
+Ice Tomb Key
+Mountain Temple Key
+The Nest Key
+Lost Halls Key
+Parasite Chambers Key
+Reef Key
+Mad God Mayhem Key
+Secluded Thicket Key
+Saint Paddy's Brew
+Bahama Sunrise
+Blue Paradise
+Pink Passion Breeze
+Lime Jungle Bay
+Bottled Honey
+Royal Jelly
+Gravel
+Wooden Box
+Gluhwein
+Grog
+Cranberry Punch
+Fairy Dust
+Hot Sauce
+Brigand Skin
+Agent Skin
+Bashing Bride Skin
+Eligible Bachelor Skin
+Nun Skin
+Witch Doctor Skin
+Artemis Skin
+Shoveguy Skin
+Stanley the Spring Bunny Skin
+Nexus no Miko Skin
+Drow Trickster Skin
+B.B. Wolf Skin
+Lil Red Skin
+Holy Avenger Skin
+King Knifeula Skin
+Witch Skin
+Platinum Knight Skin
+Platinum Warrior Skin
+Platinum Rogue Skin
+Jester Skin
+Ghost Huntress Skin
+Skeleton Warrior Skin
+Huntsman Skin
+Hunchback Skin
+Vampiress Skin
+Frankensteins Monster Skin
+Jack the Ripper Skin
+Death Skin
+Tiny Avatar Skin
+Zombie Nurse Skin
+Ascended Sorcerer Skin
+Mischievous Imp Skin
+Vampire Hunter Skin
+Poltergeist Skin
+Dark Elf Huntress Skin
+Little Helper Skin
+Slime Samurai Skin
+Santa Trickster Skin
+Oryxmas Rogue Skin
+Oryxmas Archer Skin
+Oryxmas Wizard Skin
+Oryxmas Priest Skin
+Oryxmas Warrior Skin
+Oryxmas Knight Skin
+Oryxmas Paladin Skin
+Oryxmas Assassin Skin
+Oryxmas Necromancer Skin
+Oryxmas Huntress Skin
+Oryxmas Mystic Skin
+Oryxmas Trickster Skin
+Oryxmas Sorcerer Skin
+Oryxmas Ninja Skin
+Oryxmas Samurai Skin
+Staff of Astral Knowledge T11
+Staff of Horrific Knowledge UT
+The Phylactery UT
+Staff of Yuletide Carols UT
+Wand of Ancient Warning T11
+Wand of Ancient Terror UT
+Bow of Innocent Blood T11
+Precisely Calibrated Stringstick UT
+Bow of Nightmares UT
+Bow of Eternal Frost UT
+Dagger of the Terrible Talon UT
+Robe of the Elder Warlock T12
+The Robe of Twilight UT
+Vengeance Armor T11
+Abyssal Armor T12
+Hippogriff Hide Armor T11
+Griffon Hide Armor T12
+Mantle of Skuld UT
+Cloak of Endless Twilight T5
+Ghastly Drape UT
+Golden Quiver T5
+Magic Nova Spell T5
+Golden Helm T5
+Pathfinder's Helm UT
+Onyx Shield of the Mad God UT
+Seal of the Enchanted Forest UT
+Snowbound Orb UT
+Prism of Phantoms T5
+Ilex Star UT
+Turquoise Wakizashi T4
+Jade-Imbued Wakizashi T5
+Peppermint Wakizashi UT
+Ring of Exalted Attack T5
+Ring of Exalted Dexterity T5
+Ring of the Burning Sun UT
+Ring of Unbound Attack T6
+Ring of Unbound Dexterity T6
+Ring of Decades UT
+Geb's Ring of Wisdom UT
+Ring of Pure Wishes UT
+Spectral Ring of Horrors UT
+Uncommon Reptile Egg
+Uncommon Insect Egg
+Uncommon Penguin Egg
+Uncommon Aquatic Egg
+Uncommon Humanoid Egg

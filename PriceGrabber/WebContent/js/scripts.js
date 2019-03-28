@@ -2,7 +2,7 @@ var ad = [];
 function getPrice(name){
 	
 	$.ajax({
-	    url: '/PriceGrabber/grabber/PriceGrabber/GetItemPriceHistory?itemName='+name,
+	    url: "/PriceGrabber/grabber/PriceGrabber/GetItemPriceHistory?itemName='"+name+"'",
 	    type: 'GET',
 	    success: function(msg) {
 	    	
@@ -32,7 +32,7 @@ function drawBasic(data) {
 
 
     // all other columns are of type 'number'.
-    dataTable.addColumn('string', 'date');
+    dataTable.addColumn('string', 'timestamp');
     dataTable.addColumn('number', 'Value Def');
 
     for (var i = 0; i < ad.length; i++) {
