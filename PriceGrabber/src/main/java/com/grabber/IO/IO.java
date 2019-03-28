@@ -154,7 +154,7 @@ public class IO {
 				if (!Double.isNaN(i.valueDef)) {
 					String sql = "INSERT INTO `item_prices` (item_id, item_value)" + " values (?, ?)";
 					PreparedStatement preparedStmt = conn.prepareStatement(sql);
-					preparedStmt.setInt(1, nameToId.get(i.name));
+					preparedStmt.setInt(1, i.id);
 					preparedStmt.setDouble(2, i.valueDef);
 					preparedStmt.execute();
 				} else {
@@ -164,7 +164,7 @@ public class IO {
 
 		} catch (Exception e) {
 
-			throw e;
+			e.printStackTrace();
 
 		} finally {
 			try {
@@ -194,6 +194,36 @@ public class IO {
 
 				nameToId.put(rs.getString(2), rs.getInt(1));
 				idToName.put(rs.getInt(1), rs.getString(2));
+			}
+
+		} catch (Exception e) {
+			throw e;
+
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+
+	}
+	public static void printMenu() throws Exception {
+		
+		String url = "jdbc:mysql://localhost:3306/item_prices";
+		String USER = "root";
+		String PASS = "admin";
+		Connection conn = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			conn = DriverManager.getConnection(url, USER, PASS);
+			Statement st = conn.createStatement();
+			String SQL = "SELECT item_id, item_name FROM `item_names` ORDER BY id ASC";
+			ResultSet rs = st.executeQuery(SQL);
+			while (rs.next()) {
+				System.out.println("<option value='"+rs.getString(2).toLowerCase()+"'>"+rs.getString(2)+"</option>");
+
 			}
 
 		} catch (Exception e) {

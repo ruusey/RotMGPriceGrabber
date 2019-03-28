@@ -501,17 +501,17 @@ public class BuildPrices {
     }
 	public static ArrayList<Item> getPrices(){
 		//nullify all existing lists and hashes
-		if(items==null ){
-			return null;
+		if(items.size()==0){
+			items=buildItems();
 		}
-		potions.clear();
-		items.clear();
+		//potions.clear();
+		//items.clear();
 		potionPrices.clear();
-		potionIds.clear();
-		idToName.clear();
-		nameToId.clear();
+		//potionIds.clear();
+		//idToName.clear();
+		//nameToId.clear();
 		
-		items = buildItems();
+		//items = buildItems();
 		if(items==null){
 			return null;
 		}
@@ -523,6 +523,10 @@ public class BuildPrices {
 		ArrayList<Item> failed = new ArrayList<Item>();
 		for(Item i:items){
 			if(i.potion){
+				if(i.id==defId) {
+					potionPrices.add(1.0);
+					continue;
+				}
 				log.add("[INFO] Retrieving Offers For "+i.name);
 				System.out.println("[INFO] Retrieving Offers For "+i.name);
 				ArrayList<Offer> buy = buyPrice(i);
@@ -530,11 +534,6 @@ public class BuildPrices {
 				if(buy == null || sell == null){
 					//If unable to retrieve price data do not update.
 					failed.add(i);
-					continue;
-				}
-				if(buy.size()<2 && sell.size()<2) {
-					failed.add(i);
-					i.valueDef=-1;
 					continue;
 				}
 				
@@ -551,6 +550,12 @@ public class BuildPrices {
 							ArrayList<Double> sellClean=removeSTDVAR(sellList, sellSTD, sellMean);
 							double sellAVG = average(sellClean);
 							double buyAVG = average(buyClean);
+							if(Double.isNaN(sellAVG)) {
+								sellAVG=buyAVG/2.0;
+							}
+							if(Double.isNaN(buyAVG)) {
+								buyAVG=sellAVG/2.0;
+							}
 							double buySellAVG =(sellAVG+buyAVG)/2; 
 							i.valueDef=buySellAVG;
 							potionPrices.add(i.valueDef);
