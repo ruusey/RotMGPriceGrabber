@@ -81,7 +81,7 @@ public class BuildPrices {
 		ArrayList<Item> res = new ArrayList<Item>();
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(offerURL).userAgent("Mozilla/5.0").header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8").header("upgrade-insecure-requests", "1").get();
+			doc = Jsoup.connect(offerURL).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0").header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8").header("upgrade-insecure-requests", "1").get();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return res;
@@ -136,7 +136,7 @@ public class BuildPrices {
 		int otherIDQuantity = 0;
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(sellURL+i.id+"/"+defId).userAgent("Mozilla").get();
+			doc = Jsoup.connect(sellURL+i.id+"/"+defId).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0").header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8").header("upgrade-insecure-requests", "1").get();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -169,7 +169,7 @@ public class BuildPrices {
 		int otherIDQuantity = 0;
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(sellURL+i.id+"/pots").userAgent("Mozilla").get();
+			doc = Jsoup.connect(sellURL+i.id+"/pots").userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0").header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8").header("upgrade-insecure-requests", "1").get();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -202,7 +202,7 @@ public class BuildPrices {
 		int otherIDQuantity = 0;
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(buyURL+i.id+"/"+defId).userAgent("Mozilla").get();
+			doc = Jsoup.connect(buyURL+i.id+"/"+defId).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0").header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8").header("upgrade-insecure-requests", "1").get();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -234,7 +234,7 @@ public class BuildPrices {
 		int otherIDQuantity = 0;
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(buyURL+i.id+"/pots").userAgent("Mozilla").get();
+			doc = Jsoup.connect(buyURL+i.id+"/pots").userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0").header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8").header("upgrade-insecure-requests", "1").get();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -504,14 +504,14 @@ public class BuildPrices {
 		if(items.size()==0){
 			items=buildItems();
 		}
-		//potions.clear();
-		//items.clear();
+		potions.clear();
+		items.clear();
 		potionPrices.clear();
-		//potionIds.clear();
-		//idToName.clear();
-		//nameToId.clear();
+		potionIds.clear();
+		idToName.clear();
+		nameToId.clear();
 		
-		//items = buildItems();
+		items = buildItems();
 		if(items==null){
 			return null;
 		}
