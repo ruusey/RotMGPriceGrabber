@@ -1,4 +1,6 @@
 var ad = [];
+
+
 function getPrice(name){
 	
 	$.ajax({
